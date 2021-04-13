@@ -25,7 +25,10 @@ const App = () => {
     setFilterWord(event.target.value);
   };
 
-  const resetNotification = () => setTimeout(() => setNotification(null), 3000);
+  const notificationHandler = (message) => {
+    setNotification(message);
+    setTimeout(() => setNotification(null), 3000);
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -53,14 +56,10 @@ const App = () => {
           .update(id, updatedPerson)
           .then((response) => {
             setPersons(copy);
-            setNotification(`Updated ${updatedPerson.name}`);
-            resetNotification();
+            notificationHandler(`Updated ${updatedPerson.name}`);
           })
           .catch((error) => {
-            setNotification(
-              `Error happened: Information of ${updatedPerson.name} has already been removed from the server`
-            );
-            resetNotification();
+            notificationHandler(`Error ${error.response.data}`);
           });
       }
 
@@ -69,17 +68,14 @@ const App = () => {
     }
 
     // Create a new contact
-    const newPerson = { name: newName, number: newNumber };
     numberService
-      .create(newPerson)
+      .create({ name: newName, number: newNumber })
       .then((res) => {
-        setPersons([...persons, newPerson]);
-        setNotification(`Added ${newPerson.name}`);
-        resetNotification();
+        setPersons([...persons, res.data]);
+        notificationHandler(`Added ${res.data.name}`);
       })
       .catch((error) => {
-        setNotification(`Error happened: ${error}`);
-        resetNotification();
+        notificationHandler(`Error : ${error.response.data.error}`);
       });
   };
 
@@ -92,13 +88,9 @@ const App = () => {
         .erase(id)
         .then((res) => {
           setPersons(persons.filter((item) => item.id !== id));
-          setNotification(`Deleted ${selectedPerson}`);
-          resetNotification();
+          notificationHandler(`Deleted ${selectedPerson}`);
         })
-        .catch((error) => {
-          setNotification(`Error happened: ${error}`);
-          resetNotification();
-        });
+        .catch((error) => notificationHandler(`Error happened: ${error}`));
     }
   };
 

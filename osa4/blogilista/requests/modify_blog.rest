@@ -1,0 +1,9 @@
+PUT http://localhost:3003/api/blogs/6074071c1cb7d42a6c21a239
+Content-Type: application/json
+
+{
+  "title": "React.js handbook",
+  "author": "Kent C. Dodds",
+  "url": "http://notarealblogsite.com",
+  "likes": 0
+}
