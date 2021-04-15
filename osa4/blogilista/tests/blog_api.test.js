@@ -7,6 +7,18 @@ const api = supertest(app);
 const Blog = require('../models/blog');
 
 describe('has blogs to begin with', () => {
+  let token;
+
+  beforeAll(async () => {
+    const response = await api.post('/api/login').send({
+      username: 'petri1807',
+      password: 'salasana',
+    });
+
+    // Needs bearer added as middleware handles the request.token & request.user thing
+    token = `bearer ${response.body.token}`;
+  });
+
   beforeEach(async () => {
     await Blog.deleteMany({});
     await Blog.insertMany(helper.initialBlogs);
@@ -30,12 +42,6 @@ describe('has blogs to begin with', () => {
       const id = response.body[0].id;
       expect(id).toBeDefined();
     });
-
-    test('fails with a status code 400 if id is invalid', async () => {
-      const validNonExistingId = helper.nonExistingId();
-
-      await api.get(`/api/blogs/${validNonExistingId}`).expect(400);
-    });
   });
 
   describe('adding a blog', () => {
@@ -45,11 +51,13 @@ describe('has blogs to begin with', () => {
         author: 'Matti Luukkainen',
         url: 'https://fullstackopen.com/',
         likes: 8,
+        userId: '6077f4130397c238a83b0506', // id for petri1807
       };
 
       await api
         .post('/api/blogs')
         .send(newBlog)
+        .set({ Authorization: token })
         .expect(200)
         .expect('Content-Type', /application\/json/);
 
@@ -65,11 +73,13 @@ describe('has blogs to begin with', () => {
         title: 'Full Stack Open 2021',
         author: 'Matti Luukkainen',
         url: 'https://fullstackopen.com/',
+        userId: '6077f4130397c238a83b0506', // id for petri1807
       };
 
       await api
         .post('/api/blogs')
         .send(newBlog)
+        .set({ Authorization: token })
         .expect(200)
         .expect('Content-Type', /application\/json/);
 
@@ -85,9 +95,14 @@ describe('has blogs to begin with', () => {
       const newBlog = {
         author: 'Matti Luukkainen',
         likes: 7,
+        userId: '6077f4130397c238a83b0506', // id for petri1807
       };
 
-      await api.post('/api/blogs').send(newBlog).expect(400);
+      await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .set({ Authorization: token })
+        .expect(400);
 
       const blogsAtEnd = await helper.blogsInDb();
       expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length);
@@ -117,7 +132,10 @@ describe('has blogs to begin with', () => {
       const blogsAtStart = await helper.blogsInDb();
       const noteToDelete = blogsAtStart[0];
 
-      await api.delete(`/api/blogs/${noteToDelete.id}`).expect(204);
+      await api
+        .delete(`/api/blogs/${noteToDelete.id}`)
+        .set({ Authorization: token })
+        .expect(204);
 
       const blogsAtEnd = await helper.blogsInDb();
       expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1);
