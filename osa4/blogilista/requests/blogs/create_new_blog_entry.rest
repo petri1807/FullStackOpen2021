@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBldHJpMTgwNyIsImlkIjoiNjA3NmIzZjEzMzY3ZmM1NzM4MGVlNDUyIiwiaWF0IjoxNjE4NDAwNjUxLCJleHAiOjE2MTg0MDQyNTF9.X1ovkcTWOTgE3KntsNXhJzhES7D3NhxcOgd5JhE0ix8
+Authorization: bear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBldHJpMTgwNyIsImlkIjoiNjA3NmIzZjEzMzY3ZmM1NzM4MGVlNDUyIiwiaWF0IjoxNjE4NTU0NDE1LCJleHAiOjE2MTg1NTgwMTV9.smmaPrEpm_5VMVmNz0GC7Qi-JvaNyNcnaISU47WFhdQ
 
 {
   "title": "Maximally optimizing image loading for the web in 2021",
@@ -9,3 +9,9 @@ Authorization: bear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBldHJ
   "likes": 1,
   "userId": "6076b3f13367fc57380ee452"
 }
+
+# STEPS TO TEST
+# 1. Login from ../login/login.rest with credentials petri1807/salasana
+# 2. Copy Authorization token
+# 3. Paste token after bear and save
+# 4. Send request

@@ -1,0 +1,67 @@
+.notification {
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.form {
+  max-width: 15em;
+  padding: 0.5em 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.form h1 {
+  text-transform: uppercase;
+}
+
+.inputField {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
+}
+
+.inputField input {
+  padding: 0.5em;
+}
+
+.button {
+  width: 10em;
+  padding: 0.25em;
+  margin: 0.125em 0;
+  background-color: royalblue;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.cancel {
+  background-color: darkred;
+}
+
+.userInfo button {
+  width: 10em;
+  padding: 0.25em;
+  background-color: royalblue;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.blogItem {
+  padding: 0.5em;
+  border: 2px solid hsl(0, 60%, 50%);
+  max-width: 30em;
+  margin: 0.25em;
+}
+
+.blogTitle {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.blogTitle button {
+  margin-left: auto;
+}

@@ -1,2 +1,8 @@
 DELETE http://localhost:3003/api/blogs/6076ee53e629293168472d97
-Authorization: bear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBldHJpMTgwNyIsImlkIjoiNjA3NmIzZjEzMzY3ZmM1NzM4MGVlNDUyIiwiaWF0IjoxNjE4NDA5NzQ3LCJleHAiOjE2MTg0MTMzNDd9.NPrHVOXwiLqUAj_SMSyaEh8dHjBYUTo2EeyaxPG986w
+Authorization: bear 
+
+# STEPS TO TEST
+# 1. Log in from ../login/login.rest with credentials petri1807/salasana
+# 2. Copy Authorization token
+# 3. Paste token after bear and save
+# 4. Send request
