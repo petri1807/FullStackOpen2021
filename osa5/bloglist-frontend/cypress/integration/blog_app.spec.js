@@ -46,8 +46,7 @@ describe('Blog app', function () {
 
       cy.get('.notification')
         .should('contain', 'Wrong credentials')
-        .and('have.css', 'color', 'rgb(255, 0, 0)')
-        .and('have.css', 'border-style', 'solid');
+        .and('have.css', 'color', 'rgb(255, 0, 0)');
 
       cy.get('html').should('not.contain', 'Petri Lindholm logged in');
     });
@@ -77,8 +76,7 @@ describe('Blog app', function () {
           'contain',
           'A new blog Cypress vs. Selenium: Why Cypress is the better option added'
         )
-        .and('have.css', 'color', 'rgb(0, 128, 0)')
-        .and('have.css', 'border-style', 'solid');
+        .and('have.css', 'color', 'rgb(0, 128, 0)');
     });
 
     describe('A single blog exists', () => {
@@ -97,9 +95,9 @@ describe('Blog app', function () {
         cy.contains(blogTitle);
 
         cy.get('#view').click();
-        cy.contains('likes 0');
+        cy.contains('Likes 0');
         cy.get('#like').click();
-        cy.contains('likes 1');
+        cy.contains('Likes 1');
       });
 
       it('correct user can delete a blog', function () {
@@ -112,8 +110,7 @@ describe('Blog app', function () {
         // Notification
         cy.get('.notification')
           .should('contain', `Deleted ${blogTitle} by Fake Author`)
-          .and('have.css', 'color', 'rgb(0, 128, 0)')
-          .and('have.css', 'border-style', 'solid');
+          .and('have.css', 'color', 'rgb(0, 128, 0)');
 
         // Confirm blog no longer exists
         cy.get('.blogItem').should('not.exist');
@@ -159,32 +156,30 @@ describe('Blog app', function () {
 
       it('blogs are sorted in descending order of likes ', function () {
         // Show full info for each blog
-        cy.contains('first blog').parent().find('button').click();
-        cy.contains('second blog').parent().find('button').click();
-        cy.contains('third blog').parent().find('button').click();
+        cy.contains('first blog').parent().parent().find('button').click();
+        cy.contains('second blog').parent().parent().find('button').click();
+        cy.contains('third blog').parent().parent().find('button').click();
 
         // Save like buttons for later use
         cy.contains('second blog')
           .parent()
           .parent()
-          .contains('likes')
-          .find('button')
+          .find('#like')
           .as('secondLikeButton');
 
         cy.contains('third blog')
           .parent()
           .parent()
-          .contains('likes')
-          .find('button')
+          .find('#like')
           .as('thirdLikeButton');
 
         // Click like buttons
         cy.get('@secondLikeButton').click();
-        cy.contains('likes 1');
+        cy.contains('Likes 1');
         cy.get('@secondLikeButton').click();
-        cy.contains('likes 2');
+        cy.contains('Likes 2');
         cy.get('@thirdLikeButton').click();
-        cy.contains('likes 1');
+        cy.contains('Likes 1');
 
         // Get the parent element containing all blogs, grab the children elements from it and assert their correct order
         cy.get('.blogTable')
