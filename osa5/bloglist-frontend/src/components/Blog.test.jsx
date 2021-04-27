@@ -36,7 +36,7 @@ describe('<Blog /> renders', () => {
     expect(getByText('Test title')).toBeInTheDocument();
     expect(getByText('Test author')).toBeInTheDocument();
     expect(getByText('http://testurl.com')).toBeInTheDocument();
-    expect(getByText('likes 0')).toBeInTheDocument();
+    expect(getByText('Likes 0')).toBeInTheDocument();
   });
 });
 

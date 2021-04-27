@@ -9,6 +9,8 @@ import { BlogForm } from './components/BlogForm';
 import { Blogs } from './components/Blogs';
 import { Togglable } from './components/Togglable';
 
+import { Button } from '@material-ui/core';
+
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [notification, setNotification] = useState(null);
@@ -115,37 +117,48 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Notification message={notification} type={notificationType} />
-
+    <div className="app">
       {user === null ? (
-        <LoginForm
-          handleLogin={handleLogin}
-          handleUsernameChange={handleUsernameInput}
-          handlePasswordChange={handlePasswordInput}
-          username={username}
-          password={password}
-        />
+        <div>
+          <Notification message={notification} type={notificationType} />
+          <LoginForm
+            handleLogin={handleLogin}
+            handleUsernameChange={handleUsernameInput}
+            handlePasswordChange={handlePasswordInput}
+            username={username}
+            password={password}
+          />
+        </div>
       ) : (
         <div>
-          <h1>Blogs</h1>
-          <div className="userInfo">
-            <p>{user.name} logged in</p>
-            <button className="button" onClick={handleLogout}>
-              Log out
-            </button>
-          </div>
-          <Togglable buttonLabel="New blog" ref={blogFormRef}>
-            <BlogForm createBlog={handleBlogSubmit} />
-          </Togglable>
-          <Blogs
-            blogs={blogs}
-            fetch={fetchBlogs}
-            notificationHandler={handleNotifications}
-            likeHandler={handleLike}
-            removeHandler={handleBlogRemove}
-            user={user}
-          />
+          <header>
+            <h1 className="page-title">Blogs</h1>
+            <div className="user-info">
+              <span>{user.name} logged in</span>
+              <Button
+                variant="contained"
+                color="default"
+                className="button"
+                onClick={handleLogout}
+              >
+                Log out
+              </Button>
+            </div>
+          </header>
+          <main>
+            <Notification message={notification} type={notificationType} />
+            <Togglable buttonLabel="New blog" ref={blogFormRef}>
+              <BlogForm createBlog={handleBlogSubmit} />
+            </Togglable>
+            <Blogs
+              blogs={blogs}
+              fetch={fetchBlogs}
+              notificationHandler={handleNotifications}
+              likeHandler={handleLike}
+              removeHandler={handleBlogRemove}
+              user={user}
+            />
+          </main>
         </div>
       )}
     </div>

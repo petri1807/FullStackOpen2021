@@ -1,5 +1,6 @@
 import React, { useState, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
 
 /**
  * @param buttonLabel Label for button to open each blog item
@@ -23,20 +24,29 @@ export const Togglable = React.forwardRef((props, ref) => {
 
   return (
     <div>
-      <div style={hideWhenVisible}>
-        <button
+      <div style={hideWhenVisible} className="togglable">
+        <Button
+          variant="contained"
+          color="primary"
           id="openTogglable"
           className="button"
           onClick={toggleVisibility}
         >
           {props.buttonLabel}
-        </button>
+        </Button>
       </div>
-      <div style={showWhenVisible}>
+
+      <div style={showWhenVisible} className="togglable">
+        {/* Create new form and button */}
         {props.children}
-        <button className="button cancel" onClick={toggleVisibility}>
+        <Button
+          variant="contained"
+          color="secondary"
+          className="button cancel"
+          onClick={toggleVisibility}
+        >
           Cancel
-        </button>
+        </Button>
       </div>
     </div>
   );

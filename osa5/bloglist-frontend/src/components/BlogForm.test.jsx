@@ -7,13 +7,13 @@ describe('<BlogForm /> calls', () => {
   test('submitHandler with correct data', () => {
     const createBlog = jest.fn();
 
-    const { getByLabelText, getByRole } = render(
+    const { getByPlaceholderText, getByRole } = render(
       <BlogForm createBlog={createBlog} />
     );
 
-    userEvent.type(getByLabelText('Title'), 'Tests are fun');
-    userEvent.type(getByLabelText('Author'), 'Petri Lindholm');
-    userEvent.type(getByLabelText('URL'), 'http://fullstackopen.com');
+    userEvent.type(getByPlaceholderText('Title'), 'Tests are fun');
+    userEvent.type(getByPlaceholderText('Author'), 'Petri Lindholm');
+    userEvent.type(getByPlaceholderText('URL'), 'http://fullstackopen.com');
 
     fireEvent.click(getByRole('button', { name: 'Create' }));
 

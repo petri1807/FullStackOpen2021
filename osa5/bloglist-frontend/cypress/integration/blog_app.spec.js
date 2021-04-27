@@ -23,14 +23,8 @@ describe('Blog app', function () {
   });
 
   it('Login form is shown', function () {
-    // Heading
     cy.contains(/log in/i);
 
-    // Labels
-    cy.contains(/username/i);
-    cy.contains(/password/i);
-
-    // Input fields
     cy.get('#username').should('be.visible');
     cy.get('#password').should('be.visible');
     cy.get('#login-button').should('be.visible');
@@ -67,15 +61,6 @@ describe('Blog app', function () {
     it('A blog can be created', function () {
       cy.get('#openTogglable').click();
 
-      // Heading
-      cy.contains(/create new/i);
-
-      // Labels
-      cy.contains(/title/i);
-      cy.contains(/author/i);
-      cy.contains(/url/i);
-
-      // Input fields
       cy.get('#title').type(
         'Cypress vs. Selenium: Why Cypress is the better option'
       );
@@ -84,13 +69,9 @@ describe('Blog app', function () {
         'https://blog.logrocket.com/cypress-io-the-selenium-killer/'
       );
 
-      // Submit form
       cy.get('#blogSubmit').click();
-
-      // New blog entry
       cy.contains('Cypress vs. Selenium: Why Cypress is the better option');
 
-      // Notification
       cy.get('.notification')
         .should(
           'contain',
@@ -123,11 +104,8 @@ describe('Blog app', function () {
 
       it('correct user can delete a blog', function () {
         cy.contains(blogTitle);
-
-        // View blog info
         cy.get('#view').click();
 
-        // Remove the blog
         // For some reason Cypress executes this without dealing with the confirm promt
         cy.get('#remove').click();
 

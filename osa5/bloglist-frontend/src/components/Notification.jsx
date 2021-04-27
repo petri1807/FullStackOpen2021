@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from '@material-ui/core';
 
 /**
  * @param message Message shown to user
@@ -13,8 +14,8 @@ export const Notification = ({ message, type }) => {
   };
 
   return (
-    <div className="notification" style={getStyles()}>
+    <Card className="notification" style={getStyles()}>
       {message}
-    </div>
+    </Card>
   );
 };
