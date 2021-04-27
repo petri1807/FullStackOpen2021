@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 // This needs to be changed each time Cypress tests are ran as the id changes when users are deleted and added again
 // User ID for petri1807 in bloglista-test
-const userId = '6082bc9629afe264ec2c42e0';
+const userId = '6087aeddc4e36d4b64097706';
 
 const initialBlogs = [
   {
