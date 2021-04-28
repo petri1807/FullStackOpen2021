@@ -7,6 +7,8 @@ const App = () => {
   const anecdotes = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const sortedByLikes = anecdotes.sort((a, b) => (a.votes > b.votes ? -1 : 1));
+
   const vote = (id) => {
     console.log('vote', id);
     dispatch(addVote(id));
@@ -15,7 +17,7 @@ const App = () => {
   return (
     <div>
       <h2>Anecdotes</h2>
-      {anecdotes.map((anecdote) => (
+      {sortedByLikes.map((anecdote) => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
