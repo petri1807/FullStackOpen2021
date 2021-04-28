@@ -1,0 +1,8 @@
+node_modules
+build
+
+# Setting files
+.eslintrc.js
+jest.config.js
+jest.setup.js
+babel.config.js
