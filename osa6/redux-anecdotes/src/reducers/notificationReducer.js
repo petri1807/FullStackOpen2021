@@ -1,4 +1,4 @@
-export const notificationReducer = (state = 'Default state', action) => {
+export const notificationReducer = (state = null, action) => {
   switch (action.type) {
     case 'SET_NOTIFICATION':
       return action.notification;
