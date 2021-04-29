@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addVote } from '../reducers/anecdoteReducer';
 import { setNotification } from '../reducers/notificationReducer';
 
-import { Filter } from '../components/Filter';
-
 const Anecdote = ({ anecdote, handleClick }) => {
   return (
     <div key={anecdote.id}>
@@ -31,7 +29,6 @@ export const AnecdoteList = () => {
 
   return (
     <div>
-      <Filter />
       {sortedByLikes.map((anecdote) => (
         <Anecdote
           key={anecdote.id}
