@@ -21,6 +21,12 @@ export const AnecdoteList = () => {
   const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
+  const handleLike = (anecdote) => {
+    dispatch(addVote(anecdote));
+    dispatch(setNotification(`you voted ${anecdote.content}`));
+    setTimeout(() => dispatch(setNotification(null)), 5000);
+  };
+
   const filtered = anecdotes.filter((anecdote) =>
     anecdote.content.toLowerCase().includes(filter.toLowerCase()) ? true : false
   );
@@ -33,11 +39,7 @@ export const AnecdoteList = () => {
         <Anecdote
           key={anecdote.id}
           anecdote={anecdote}
-          handleClick={() => {
-            dispatch(addVote(anecdote.id));
-            dispatch(setNotification(`you voted ${anecdote.content}`));
-            setTimeout(() => dispatch(setNotification(null)), 5000);
-          }}
+          handleClick={() => handleLike(anecdote)}
         />
       ))}
     </div>

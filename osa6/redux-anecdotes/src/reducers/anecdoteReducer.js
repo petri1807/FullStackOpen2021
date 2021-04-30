@@ -18,10 +18,13 @@ export const anecdoteReducer = (state = [], action) => {
   }
 };
 
-export const addVote = (id) => {
-  return {
-    type: 'VOTE',
-    data: { id },
+export const addVote = (anecdote) => {
+  return async (dispatch) => {
+    const updatedAnecdote = await anecdoteService.voteFor(anecdote);
+    dispatch({
+      type: 'VOTE',
+      data: updatedAnecdote,
+    });
   };
 };
 
