@@ -7,9 +7,19 @@ export const notificationReducer = (state = null, action) => {
   }
 };
 
-export const setNotification = (notification) => {
-  return {
-    type: 'SET_NOTIFICATION',
-    notification,
+export const setNotification = (notification, time) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      notification,
+    });
+    setTimeout(
+      () =>
+        dispatch({
+          type: 'SET_NOTIFICATION',
+          notification: null,
+        }),
+      time * 1000
+    );
   };
 };

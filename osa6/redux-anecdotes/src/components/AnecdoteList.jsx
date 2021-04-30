@@ -23,8 +23,7 @@ export const AnecdoteList = () => {
 
   const handleLike = (anecdote) => {
     dispatch(addVote(anecdote));
-    dispatch(setNotification(`you voted ${anecdote.content}`));
-    setTimeout(() => dispatch(setNotification(null)), 5000);
+    dispatch(setNotification(`you voted ${anecdote.content}`, 5));
   };
 
   const filtered = anecdotes.filter((anecdote) =>
