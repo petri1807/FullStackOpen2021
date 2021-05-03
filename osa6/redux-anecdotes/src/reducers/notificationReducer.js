@@ -7,19 +7,31 @@ export const notificationReducer = (state = null, action) => {
   }
 };
 
+let timeoutID = null;
+
 export const setNotification = (notification, time) => {
   return (dispatch) => {
     dispatch({
       type: 'SET_NOTIFICATION',
       notification,
     });
-    setTimeout(
-      () =>
+
+    const cancelPreviousReset = () => clearTimeout(timeoutID);
+
+    const resetNotification = () => {
+      if (typeof timeoutID === 'number') {
+        cancelPreviousReset();
+      }
+
+      timeoutID = setTimeout(() => {
         dispatch({
           type: 'SET_NOTIFICATION',
           notification: null,
-        }),
-      time * 1000
-    );
+        });
+        timeoutID = null;
+      }, time * 1000);
+    };
+
+    resetNotification();
   };
 };
