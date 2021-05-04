@@ -28,12 +28,31 @@ const Menu = () => {
   );
 };
 
+const Anecdote = ({ anecdote }) => {
+  const padding = {
+    paddingBottom: 10,
+  };
+  return (
+    <div>
+      <h2>
+        {anecdote.content} by {anecdote.author}
+      </h2>
+      <div style={padding}>has {anecdote.votes} votes</div>
+      <div style={padding}>
+        for more info see <a href={anecdote.info}> {anecdote.info}</a>
+      </div>
+    </div>
+  );
+};
+
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
       {anecdotes.map((anecdote) => (
-        <li key={anecdote.id}>{anecdote.content}</li>
+        <li key={anecdote.id}>
+          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+        </li>
       ))}
     </ul>
   </div>
@@ -131,18 +150,25 @@ const App = () => {
       author: 'Jez Humble',
       info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
       votes: 0,
-      id: '1',
+      id: 1,
     },
     {
       content: 'Premature optimization is the root of all evil',
       author: 'Donald Knuth',
       info: 'http://wiki.c2.com/?PrematureOptimization',
       votes: 0,
-      id: '2',
+      id: 2,
     },
   ]);
 
   const [notification, setNotification] = useState('');
+
+  const match = useRouteMatch('/anecdotes/:id');
+  console.log(match);
+  const anecdote = match
+    ? anecdotes.find((a) => a.id === Number(match.params.id))
+    : null;
+  console.log(anecdote);
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0);
@@ -173,6 +199,9 @@ const App = () => {
         </Route>
         <Route path="/create">
           <CreateNew addNew={addNew} />
+        </Route>
+        <Route path="/anecdotes/:id">
+          <Anecdote anecdote={anecdote} />
         </Route>
         <Route path="/">
           <AnecdoteList anecdotes={anecdotes} />
