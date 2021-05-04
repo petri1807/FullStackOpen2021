@@ -99,6 +99,8 @@ const CreateNew = (props) => {
   const [author, setAuthor] = useState('');
   const [info, setInfo] = useState('');
 
+  const history = useHistory();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addNew({
@@ -107,6 +109,7 @@ const CreateNew = (props) => {
       info,
       votes: 0,
     });
+    history.push('/');
   };
 
   return (
@@ -143,6 +146,10 @@ const CreateNew = (props) => {
   );
 };
 
+const Notification = ({ message }) => {
+  return <div>{message}</div>;
+};
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -150,29 +157,29 @@ const App = () => {
       author: 'Jez Humble',
       info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
       votes: 0,
-      id: 1,
+      id: '1',
     },
     {
       content: 'Premature optimization is the root of all evil',
       author: 'Donald Knuth',
       info: 'http://wiki.c2.com/?PrematureOptimization',
       votes: 0,
-      id: 2,
+      id: '2',
     },
   ]);
 
-  const [notification, setNotification] = useState('');
+  const [notification, setNotification] = useState(null);
 
   const match = useRouteMatch('/anecdotes/:id');
-  console.log(match);
   const anecdote = match
-    ? anecdotes.find((a) => a.id === Number(match.params.id))
+    ? anecdotes.find((a) => a.id === match.params.id)
     : null;
-  console.log(anecdote);
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0);
     setAnecdotes(anecdotes.concat(anecdote));
+    setNotification(`a new anecdote ${anecdote.content} created`);
+    setTimeout(() => setNotification(null), 10000);
   };
 
   const anecdoteById = (id) => anecdotes.find((a) => a.id === id);
@@ -192,6 +199,8 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+
+      {notification && <Notification message={notification} />}
 
       <Switch>
         <Route path="/about">
