@@ -1,0 +1,116 @@
+body {
+  background-color: hsl(0, 0%, 98%);
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: #33485b;
+  margin: 0;
+  text-align: center;
+}
+
+/*
+ * MAIN TITLE, USER'S FULL NAME, LOG OUT BUTTON 
+ */
+header {
+  position: relative;
+  /* border: 1px solid black; */
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 3em;
+  text-align: center;
+}
+
+main {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 700px;
+  padding: 3em;
+}
+
+.user-info {
+  position: absolute;
+  right: 1em;
+}
+
+.user-info span {
+  margin: 0 1em;
+}
+
+/*
+ * LOG IN SCREEN
+ */
+
+.input-container input,
+textarea {
+  margin: 0.5em;
+}
+
+.input-container input:focus {
+  outline: none;
+  background-color: none;
+}
+
+.login-credentials {
+  position: relative;
+  padding: 1em;
+  margin: 1em;
+  text-align: start;
+  width: 17.2em;
+}
+
+/*
+ * MAIN CONTENT
+ */
+
+.blogItem {
+  padding: 1em;
+  margin: 1em;
+  text-align: start;
+}
+
+.author {
+  color: #858585;
+}
+
+.blog-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #354d64;
+}
+
+.blog-buttons {
+  display: flex;
+}
+
+.blog-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
+.notification {
+  background: lightgrey;
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .user-info,
+  .login-credentials {
+    position: relative;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .blog-buttons,
+  .blog-details {
+    flex-direction: column;
+  }
+}
