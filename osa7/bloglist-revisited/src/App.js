@@ -4,6 +4,7 @@ import blogService from './services/blogs';
 import loginService from './services/login';
 
 import { setNotification } from './reducers/notificationReducer';
+import { initializeBlogs } from './reducers/blogReducer';
 
 import { useDispatch } from 'react-redux';
 
@@ -16,17 +17,12 @@ import { Togglable } from './components/Togglable';
 import { Button } from '@material-ui/core';
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
 
   const blogFormRef = useRef();
   const dispatch = useDispatch();
-
-  const fetchBlogs = () => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  };
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -36,7 +32,7 @@ const App = () => {
       blogService.setToken(user.token);
     }
 
-    fetchBlogs();
+    dispatch(initializeBlogs());
   }, []);
 
   /**
@@ -79,32 +75,22 @@ const App = () => {
     setPassword(e.target.value);
   };
 
+  // Broken for now, doesn't show updated state unless you manually refresh
   const handleLike = (newObject) => {
     const newBlog = { ...newObject, likes: newObject.likes + 1 };
     blogService.update(newBlog);
-
-    fetchBlogs();
   };
 
-  const handleBlogSubmit = async (blogObject) => {
+  // Broken for now, missing user info from db so doesn't show remove button unless you manually refresh
+  const handleBlogSubmit = () => {
     blogFormRef.current.toggleVisibility();
-
-    try {
-      const response = await blogService.create(blogObject);
-      if (response) {
-        fetchBlogs();
-        handleNotifications(`A new blog ${response.title} added`);
-      }
-    } catch (error) {
-      handleNotifications(error.message);
-    }
   };
 
+  // Broken for now, doesn't remove deleted posts from view unless you manually refresh
   const handleBlogRemove = (blog) => {
     blogService
       .erase(blog.id)
       .then(() => {
-        fetchBlogs();
         handleNotifications(`Deleted ${blog.title} by ${blog.author}`);
       })
       .catch((error) => handleNotifications(error.message));
@@ -145,8 +131,6 @@ const App = () => {
               <BlogForm createBlog={handleBlogSubmit} />
             </Togglable>
             <Blogs
-              blogs={blogs}
-              fetch={fetchBlogs}
               notificationHandler={handleNotifications}
               likeHandler={handleLike}
               removeHandler={handleBlogRemove}

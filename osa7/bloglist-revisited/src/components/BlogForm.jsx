@@ -1,62 +1,57 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Box, TextField } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { createNewBlog } from '../reducers/blogReducer';
+
+const inputProps = (name) => {
+  return {
+    name,
+    id: name,
+    placeholder: name,
+    type: 'text',
+    variant: 'standard',
+    color: 'secondary',
+  };
+};
 
 /**
  * @param createBlog - Handler for blog creation
  */
 export const BlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
+  const dispatch = useDispatch();
 
-  const addBlog = (event) => {
+  const titleInput = inputProps('title');
+  const authorInput = inputProps('author');
+  const urlInput = inputProps('url');
+
+  const addBlog = async (event) => {
     event.preventDefault();
-    createBlog({
-      title: title,
-      author: author,
-      url: url,
-    });
+    const title = event.target.title.value;
+    const author = event.target.author.value;
+    const url = event.target.url.value;
 
-    setTitle('');
-    setAuthor('');
-    setUrl('');
+    const blog = { title, author, url };
+
+    event.target.title.value = '';
+    event.target.author.value = '';
+    event.target.url.value = '';
+
+    dispatch(createNewBlog(blog));
+
+    // Still handles the visibility toggling from Togglable component
+    createBlog();
   };
 
   return (
     <form onSubmit={addBlog}>
       <div className="input-container">
-        <TextField
-          variant="standard"
-          color="secondary"
-          type="text"
-          placeholder="Title"
-          // multiline
-          value={title}
-          id="title"
-          onChange={({ target }) => setTitle(target.value)}
-        />
+        <TextField {...titleInput} />
       </div>
       <div className="input-container">
-        <TextField
-          variant="standard"
-          color="secondary"
-          type="text"
-          placeholder="Author"
-          value={author}
-          id="author"
-          onChange={({ target }) => setAuthor(target.value)}
-        />
+        <TextField {...authorInput} />
       </div>
       <div className="input-container">
-        <TextField
-          variant="standard"
-          color="secondary"
-          type="text"
-          placeholder="URL"
-          value={url}
-          id="url"
-          onChange={({ target }) => setUrl(target.value)}
-        />
+        <TextField {...urlInput} />
       </div>
       <Box m="1em">
         <Button
