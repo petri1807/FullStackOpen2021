@@ -5,8 +5,9 @@ import loginService from './services/login';
 
 import { setNotification } from './reducers/notificationReducer';
 import { initializeBlogs } from './reducers/blogReducer';
+import { setUser as setReduxUser, logoutUser } from './reducers/userReducer';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Notification } from './components/Notification';
 import { LoginForm } from './components/LoginForm';
@@ -19,17 +20,16 @@ import { Button } from '@material-ui/core';
 const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
 
   const blogFormRef = useRef();
   const dispatch = useDispatch();
+  const redux_user = useSelector((state) => state.user);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      blogService.setToken(user.token);
+      dispatch(setReduxUser(user));
     }
 
     dispatch(initializeBlogs());
@@ -50,10 +50,7 @@ const App = () => {
         password,
       });
 
-      window.localStorage.setItem('loggedUser', JSON.stringify(user));
-
-      blogService.setToken(user.token);
-      setUser(user);
+      dispatch(setReduxUser(user));
       setUsername('');
       setPassword('');
     } catch (error) {
@@ -62,9 +59,7 @@ const App = () => {
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedUser');
-    blogService.setToken(null);
-    setUser(null);
+    dispatch(logoutUser());
   };
 
   const handleUsernameInput = (e) => {
@@ -82,7 +77,7 @@ const App = () => {
 
   return (
     <div className="app">
-      {user === null ? (
+      {redux_user === null ? (
         <div>
           <Notification />
           <LoginForm
@@ -98,7 +93,7 @@ const App = () => {
           <header>
             <h1 className="page-title">Blogs</h1>
             <div className="user-info">
-              <span>{user.name} logged in</span>
+              <span>{redux_user.name} logged in</span>
               <Button
                 variant="contained"
                 color="default"
@@ -114,7 +109,7 @@ const App = () => {
             <Togglable buttonLabel="New blog" ref={blogFormRef}>
               <BlogForm createBlog={handleBlogSubmit} />
             </Togglable>
-            <Blogs user={user} />
+            <Blogs user={redux_user} />
           </main>
         </div>
       )}
