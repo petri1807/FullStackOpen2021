@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import loginService from './services/login';
 
 import { setNotification } from './reducers/notificationReducer';
 import { initializeBlogs } from './reducers/blogReducer';
-import { setUser as setReduxUser, logoutUser } from './reducers/userReducer';
-
-import { useDispatch, useSelector } from 'react-redux';
+import { setUser as setReduxUser } from './reducers/userReducer';
 
 import { Notification } from './components/Notification';
 import { LoginForm } from './components/LoginForm';
@@ -15,8 +14,8 @@ import { BlogForm } from './components/BlogForm';
 import { Blogs } from './components/Blogs';
 import { Togglable } from './components/Togglable';
 import Users from './components/Users';
-
-import { Button } from '@material-ui/core';
+import Header from './components/Header';
+import User from './components/User';
 
 const App = () => {
   const [username, setUsername] = useState('');
@@ -36,9 +35,6 @@ const App = () => {
     dispatch(initializeBlogs());
   }, []);
 
-  /**
-   * @param message Message to deliver
-   */
   const handleNotifications = (message) => {
     dispatch(setNotification(message, 5));
   };
@@ -57,10 +53,6 @@ const App = () => {
     } catch (error) {
       handleNotifications('Wrong credentials');
     }
-  };
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
   };
 
   const handleUsernameInput = (e) => {
@@ -92,24 +84,14 @@ const App = () => {
       ) : (
         <div>
           <Switch>
+            <Route path="/users/:id">
+              <User />
+            </Route>
             <Route path="/users">
               <Users />
             </Route>
             <Route path="/">
-              <header>
-                <h1 className="page-title">Blogs</h1>
-                <div className="user-info">
-                  <span>{redux_user.name} logged in</span>
-                  <Button
-                    variant="contained"
-                    color="default"
-                    className="button"
-                    onClick={handleLogout}
-                  >
-                    Log out
-                  </Button>
-                </div>
-              </header>
+              <Header />
               <main>
                 <Notification />
                 <Togglable buttonLabel="New blog" ref={blogFormRef}>

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { logoutUser } from '../reducers/userReducer';
-import userService from '../services/users';
+import { setUsers } from '../reducers/usersReducer';
+
+import Header from './Header';
+
+import { tableHeaderStyle } from '../styles/styles';
 
 import {
   Table,
@@ -13,41 +16,21 @@ import {
   TableContainer,
   TableRow,
   Paper,
-  Button,
 } from '@material-ui/core';
 
 const Users = () => {
-  // Change this to redux
-  const [users, setUsers] = useState([]);
-
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const history = useHistory();
+  const allUsers = useSelector((state) => state.allUsers);
 
   useEffect(() => {
-    userService.getAll().then((res) => setUsers(res));
+    if (!allUsers.length) {
+      dispatch(setUsers());
+    }
   }, []);
-
-  const tableHeaderStyle = {
-    backgroundColor: 'hsl(100, 40%, 30%)',
-    color: 'white',
-    fontSize: '1.2em',
-  };
 
   return (
     <div>
-      <h1 className="page-title">Blogs</h1>
-      <p>{user.name} logged in</p>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => {
-          dispatch(logoutUser());
-          history.push('/');
-        }}
-      >
-        log out
-      </Button>
+      <Header />
       <h2>Users</h2>
       <TableContainer
         component={Paper}
@@ -64,15 +47,18 @@ const Users = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((u) => (
-              <TableRow key={u.id}>
-                <TableCell>{u.name}</TableCell>
-                <TableCell align="right">{u.blogs.length}</TableCell>
+            {allUsers.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>
+                  <Link to={`/users/${user.id}`}>{user.name}</Link>
+                </TableCell>
+                <TableCell align="right">{user.blogs.length}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      {/* <User user={allUsers[0]} /> */}
     </div>
   );
 };
