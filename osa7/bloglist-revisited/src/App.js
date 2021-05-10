@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-import blogService from './services/blogs';
 import loginService from './services/login';
 
 import { setNotification } from './reducers/notificationReducer';
@@ -14,6 +14,7 @@ import { LoginForm } from './components/LoginForm';
 import { BlogForm } from './components/BlogForm';
 import { Blogs } from './components/Blogs';
 import { Togglable } from './components/Togglable';
+import Users from './components/Users';
 
 import { Button } from '@material-ui/core';
 
@@ -90,27 +91,34 @@ const App = () => {
         </div>
       ) : (
         <div>
-          <header>
-            <h1 className="page-title">Blogs</h1>
-            <div className="user-info">
-              <span>{redux_user.name} logged in</span>
-              <Button
-                variant="contained"
-                color="default"
-                className="button"
-                onClick={handleLogout}
-              >
-                Log out
-              </Button>
-            </div>
-          </header>
-          <main>
-            <Notification />
-            <Togglable buttonLabel="New blog" ref={blogFormRef}>
-              <BlogForm createBlog={handleBlogSubmit} />
-            </Togglable>
-            <Blogs user={redux_user} />
-          </main>
+          <Switch>
+            <Route path="/users">
+              <Users />
+            </Route>
+            <Route path="/">
+              <header>
+                <h1 className="page-title">Blogs</h1>
+                <div className="user-info">
+                  <span>{redux_user.name} logged in</span>
+                  <Button
+                    variant="contained"
+                    color="default"
+                    className="button"
+                    onClick={handleLogout}
+                  >
+                    Log out
+                  </Button>
+                </div>
+              </header>
+              <main>
+                <Notification />
+                <Togglable buttonLabel="New blog" ref={blogFormRef}>
+                  <BlogForm createBlog={handleBlogSubmit} />
+                </Togglable>
+                <Blogs user={redux_user} />
+              </main>
+            </Route>
+          </Switch>
         </div>
       )}
     </div>
