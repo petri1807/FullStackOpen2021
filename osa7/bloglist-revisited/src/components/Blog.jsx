@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
 import { Button, Paper, Box, Link } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { likeBlog, deleteBlog } from '../reducers/blogReducer';
 
 /**
  * @param blog individual blog item
- * @param likeHandler call like handler
- * @param removeHandler call remove handler
  * @param user current logged in user
  */
-export const Blog = ({ blog, likeHandler, removeHandler, user }) => {
+export const Blog = ({ blog, user }) => {
   const [displayInfo, setDisplayInfo] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleVisibility = () => {
     setDisplayInfo(!displayInfo);
   };
 
   const handleLike = () => {
-    likeHandler(blog);
+    dispatch(likeBlog(blog));
   };
 
   const handleRemove = () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-      removeHandler(blog);
+      dispatch(deleteBlog(blog));
     }
   };
 

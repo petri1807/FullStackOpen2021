@@ -75,25 +75,9 @@ const App = () => {
     setPassword(e.target.value);
   };
 
-  // Broken for now, doesn't show updated state unless you manually refresh
-  const handleLike = (newObject) => {
-    const newBlog = { ...newObject, likes: newObject.likes + 1 };
-    blogService.update(newBlog);
-  };
-
   // Broken for now, missing user info from db so doesn't show remove button unless you manually refresh
   const handleBlogSubmit = () => {
     blogFormRef.current.toggleVisibility();
-  };
-
-  // Broken for now, doesn't remove deleted posts from view unless you manually refresh
-  const handleBlogRemove = (blog) => {
-    blogService
-      .erase(blog.id)
-      .then(() => {
-        handleNotifications(`Deleted ${blog.title} by ${blog.author}`);
-      })
-      .catch((error) => handleNotifications(error.message));
   };
 
   return (
@@ -130,12 +114,7 @@ const App = () => {
             <Togglable buttonLabel="New blog" ref={blogFormRef}>
               <BlogForm createBlog={handleBlogSubmit} />
             </Togglable>
-            <Blogs
-              notificationHandler={handleNotifications}
-              likeHandler={handleLike}
-              removeHandler={handleBlogRemove}
-              user={user}
-            />
+            <Blogs user={user} />
           </main>
         </div>
       )}

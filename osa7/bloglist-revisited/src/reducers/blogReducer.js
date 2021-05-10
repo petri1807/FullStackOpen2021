@@ -1,4 +1,5 @@
 import blogService from '../services/blogs';
+import { setNotification } from './notificationReducer';
 
 export const blogReducer = (state = [], action) => {
   switch (action.type) {
@@ -6,6 +7,12 @@ export const blogReducer = (state = [], action) => {
       return action.data;
     case 'NEW_BLOG':
       return [...state, action.data];
+    case 'LIKE':
+      return state.map((blog) =>
+        blog.id === action.data.id ? { ...blog, likes: blog.likes + 1 } : blog
+      );
+    case 'DELETE':
+      return state.filter((blog) => blog.id !== action.data.id);
     default:
       return state;
   }
@@ -29,15 +36,32 @@ export const createNewBlog = (blog) => {
         type: 'NEW_BLOG',
         data: newBlog,
       });
-      dispatch({
-        type: 'SET_NOTIFICATION',
-        notification: `A new blog ${newBlog.title} added`,
-      });
+      dispatch(setNotification(`A new blog ${newBlog.title} added`, 5));
     } else {
-      dispatch({
-        type: 'SET_NOTIFICATION',
-        notification: 'Something went wrong',
-      });
+      dispatch(setNotification(newBlog.error, 5));
     }
+  };
+};
+
+export const likeBlog = (blog) => {
+  return async (dispatch) => {
+    const newBlog = { ...blog, likes: blog.likes + 1 };
+    const updatedBlog = await blogService.update(newBlog);
+    dispatch({
+      type: 'LIKE',
+      data: updatedBlog,
+    });
+  };
+};
+
+export const deleteBlog = (blog) => {
+  return async (dispatch) => {
+    const deletedBlog = await blogService.erase(blog.id);
+    console.log(deletedBlog);
+    dispatch({
+      type: 'DELETE',
+      data: blog,
+    });
+    dispatch(setNotification(`Deleted ${blog.title} by ${blog.author}`, 5));
   };
 };
