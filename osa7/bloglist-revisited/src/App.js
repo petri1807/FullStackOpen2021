@@ -12,6 +12,7 @@ import { Notification } from './components/Notification';
 import { LoginForm } from './components/LoginForm';
 import { BlogForm } from './components/BlogForm';
 import { Blogs } from './components/Blogs';
+import { Blog } from './components/Blog';
 import { Togglable } from './components/Togglable';
 import Users from './components/Users';
 import Header from './components/Header';
@@ -82,26 +83,28 @@ const App = () => {
           />
         </div>
       ) : (
-        <div>
-          <Switch>
-            <Route path="/users/:id">
-              <User />
-            </Route>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/">
-              <Header />
-              <main>
-                <Notification />
-                <Togglable buttonLabel="New blog" ref={blogFormRef}>
-                  <BlogForm createBlog={handleBlogSubmit} />
-                </Togglable>
-                <Blogs user={redux_user} />
-              </main>
-            </Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/users/:id">
+            <User />
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/blogs/:id">
+            <Header />
+            <Blog />
+          </Route>
+          <Route path="/">
+            <Header />
+            <main>
+              <Notification />
+              <Togglable buttonLabel="New blog" ref={blogFormRef}>
+                <BlogForm createBlog={handleBlogSubmit} />
+              </Togglable>
+              <Blogs />
+            </main>
+          </Route>
+        </Switch>
       )}
     </div>
   );

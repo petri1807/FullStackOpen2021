@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, Link } from 'react-router-dom';
 
 import Header from './Header';
 
@@ -31,7 +31,7 @@ const User = () => {
       <TableContainer
         component={Paper}
         elevation={3}
-        style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}
+        style={{ maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}
       >
         <Table>
           <TableHead>
@@ -42,7 +42,11 @@ const User = () => {
           <TableBody>
             {selectedUser.blogs.map((blog) => (
               <TableRow key={blog.id}>
-                <TableCell>{blog.title}</TableCell>
+                <TableCell>
+                  <Link to={`/blogs/${blog.id}`}>
+                    {blog.title} by {blog.author}
+                  </Link>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

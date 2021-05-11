@@ -35,7 +35,7 @@ const Users = () => {
       <TableContainer
         component={Paper}
         elevation={3}
-        style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}
+        style={{ maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}
       >
         <Table>
           <TableHead>
@@ -58,7 +58,6 @@ const Users = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <User user={allUsers[0]} /> */}
     </div>
   );
 };

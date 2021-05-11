@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { Button, Paper, Box, Link } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouteMatch, useHistory } from 'react-router-dom';
+
 import { likeBlog, deleteBlog } from '../reducers/blogReducer';
 
-/**
- * @param blog individual blog item
- * @param user current logged in user
- */
-export const Blog = ({ blog, user }) => {
-  const [displayInfo, setDisplayInfo] = useState(false);
-  const dispatch = useDispatch();
+import { Button, Paper, Box, Link } from '@material-ui/core';
 
-  const toggleVisibility = () => {
-    setDisplayInfo(!displayInfo);
-  };
+export const Blog = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const match = useRouteMatch('/blogs/:id');
+  if (!match) return null;
+
+  const user = useSelector((state) => state.user);
+  const blog = useSelector((state) =>
+    state.blogs.find((blog) => blog.id === match.params.id)
+  );
 
   const handleLike = () => {
     dispatch(likeBlog(blog));
@@ -22,40 +24,18 @@ export const Blog = ({ blog, user }) => {
   const handleRemove = () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
       dispatch(deleteBlog(blog));
+      history.push('/');
     }
   };
-
-  if (!displayInfo) {
-    return (
-      <Paper elevation={3} className="blogItem">
-        <div className="blog-header">
-          <p className="author"> {blog.author}</p>
-          <p className="blog-title">{blog.title}</p>
-        </div>
-        <div className="blog-buttons">
-          <Box pr="0.5em" pt="0.5em" pb="0.5em">
-            <Button variant="outlined" id="view" onClick={toggleVisibility}>
-              View
-            </Button>
-          </Box>
-        </div>
-      </Paper>
-    );
-  }
 
   return (
     <Paper elevation={3} className="blogItem">
       <div className="blog-header">
         <p className="author">{blog.author}</p>
         <p className="blog-title">{blog.title}</p>
+        <p>Added by {blog.user.name}</p>
       </div>
       <div className="blog-buttons">
-        <Box pr="0.5em" pt="0.5em" pb="0.5em">
-          <Button variant="outlined" id="hide" onClick={toggleVisibility}>
-            hide
-          </Button>
-        </Box>
-
         <Box p="0.5em">
           <Button
             variant="contained"
