@@ -1,5 +1,3 @@
-Live demo on [Heroku](https://polar-headland-59095.herokuapp.com/)
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

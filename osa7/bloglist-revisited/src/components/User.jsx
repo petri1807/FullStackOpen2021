@@ -2,8 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch, Link } from 'react-router-dom';
 
-import Header from './Header';
-
 import { tableHeaderStyle } from '../styles/styles';
 
 import {
@@ -26,7 +24,6 @@ const User = () => {
 
   return (
     <div>
-      <Header />
       <h1>{selectedUser.name}</h1>
       <TableContainer
         component={Paper}

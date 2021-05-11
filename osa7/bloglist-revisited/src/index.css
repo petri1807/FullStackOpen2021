@@ -1,3 +1,9 @@
+html,
+body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 body {
   background-color: hsl(0, 0%, 98%);
   font-size: 16px;

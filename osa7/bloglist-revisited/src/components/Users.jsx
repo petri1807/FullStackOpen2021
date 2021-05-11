@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 
 import { setUsers } from '../reducers/usersReducer';
 
-import Header from './Header';
-
 import { tableHeaderStyle } from '../styles/styles';
 
 import {
@@ -30,12 +28,15 @@ const Users = () => {
 
   return (
     <div>
-      <Header />
-      <h2>Users</h2>
       <TableContainer
         component={Paper}
         elevation={3}
-        style={{ maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}
+        style={{
+          maxWidth: 600,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '2em',
+        }}
       >
         <Table>
           <TableHead>

@@ -17,6 +17,7 @@ import { Togglable } from './components/Togglable';
 import Users from './components/Users';
 import Header from './components/Header';
 import User from './components/User';
+import Navigation from './components/Navigation';
 
 const App = () => {
   const [username, setUsername] = useState('');
@@ -83,28 +84,29 @@ const App = () => {
           />
         </div>
       ) : (
-        <Switch>
-          <Route path="/users/:id">
-            <User />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/blogs/:id">
-            <Header />
-            <Blog />
-          </Route>
-          <Route path="/">
-            <Header />
-            <main>
-              <Notification />
-              <Togglable buttonLabel="New blog" ref={blogFormRef}>
-                <BlogForm createBlog={handleBlogSubmit} />
-              </Togglable>
-              <Blogs />
-            </main>
-          </Route>
-        </Switch>
+        <div>
+          <Header />
+          <Switch>
+            <Route path="/users/:id">
+              <User />
+            </Route>
+            <Route path="/users">
+              <Users />
+            </Route>
+            <Route path="/blogs/:id">
+              <Blog />
+            </Route>
+            <Route path="/">
+              <main>
+                <Notification />
+                <Togglable buttonLabel="New blog" ref={blogFormRef}>
+                  <BlogForm createBlog={handleBlogSubmit} />
+                </Togglable>
+                <Blogs />
+              </main>
+            </Route>
+          </Switch>
+        </div>
       )}
     </div>
   );
