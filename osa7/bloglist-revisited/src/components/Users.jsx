@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { setUsers } from '../reducers/usersReducer';
 
-import { tableHeaderStyle } from '../styles/styles';
+import { tableHeaderStyle, linkStyle } from '../styles/styles';
 
 import {
   Table,
@@ -51,7 +51,9 @@ const Users = () => {
             {allUsers.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>
-                  <Link to={`/users/${user.id}`}>{user.name}</Link>
+                  <Link to={`/users/${user.id}`} style={linkStyle}>
+                    {user.name}
+                  </Link>
                 </TableCell>
                 <TableCell align="right">{user.blogs.length}</TableCell>
               </TableRow>

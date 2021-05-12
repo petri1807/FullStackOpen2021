@@ -33,6 +33,11 @@ const erase = async (id) => {
   return response.data;
 };
 
-const methods = { setToken, getAll, create, update, erase };
+const createComment = async (id, comment) => {
+  const response = await axios.post(`${baseUrl}/${id}/comments`, comment);
+  return response.data;
+};
+
+const methods = { setToken, getAll, create, update, erase, createComment };
 
 export default methods;

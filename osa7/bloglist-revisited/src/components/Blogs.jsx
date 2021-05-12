@@ -10,9 +10,9 @@ import {
   TableRow,
   Paper,
 } from '@material-ui/core';
-import { tableHeaderStyle } from '../styles/styles';
+import { tableHeaderStyle, linkStyle } from '../styles/styles';
 
-export const Blogs = () => {
+const Blogs = () => {
   const redux_blogs = useSelector((state) => state.blogs);
   const sortedBlogs = redux_blogs.sort((a, b) => (a.likes > b.likes ? -1 : 1));
 
@@ -37,7 +37,7 @@ export const Blogs = () => {
           {sortedBlogs.map((blog) => (
             <TableRow key={blog.id}>
               <TableCell>
-                <Link to={`/blogs/${blog.id}`}>
+                <Link to={`/blogs/${blog.id}`} style={linkStyle}>
                   {blog.title} by {blog.author}
                 </Link>
               </TableCell>
@@ -48,3 +48,5 @@ export const Blogs = () => {
     </TableContainer>
   );
 };
+
+export default Blogs;

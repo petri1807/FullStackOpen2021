@@ -13,6 +13,12 @@ export const blogReducer = (state = [], action) => {
       );
     case 'DELETE':
       return state.filter((blog) => blog.id !== action.data.id);
+    case 'NEW_COMMENT':
+      return state.map((blog) =>
+        blog.id === action.data.id
+          ? { ...blog, comments: [...blog.comments, action.data.comment] }
+          : blog
+      );
     default:
       return state;
   }
@@ -63,5 +69,18 @@ export const deleteBlog = (blog) => {
       data: blog,
     });
     dispatch(setNotification(`Deleted ${blog.title} by ${blog.author}`, 5));
+  };
+};
+
+export const createNewComment = (id, comment) => {
+  return async (dispatch) => {
+    const responseComment = await blogService.createComment(id, comment);
+    dispatch({
+      type: 'NEW_COMMENT',
+      data: {
+        id,
+        comment: responseComment,
+      },
+    });
   };
 };

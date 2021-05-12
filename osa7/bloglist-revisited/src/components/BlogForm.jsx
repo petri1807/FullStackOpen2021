@@ -14,10 +14,7 @@ const inputProps = (name) => {
   };
 };
 
-/**
- * @param createBlog - Handler for blog creation
- */
-export const BlogForm = ({ createBlog }) => {
+const BlogForm = ({ toggleVisibility }) => {
   const dispatch = useDispatch();
 
   const titleInput = inputProps('title');
@@ -37,9 +34,7 @@ export const BlogForm = ({ createBlog }) => {
     event.target.url.value = '';
 
     dispatch(createNewBlog(blog));
-
-    // Still handles the visibility toggling from Togglable component
-    createBlog();
+    toggleVisibility();
   };
 
   return (
@@ -67,3 +62,5 @@ export const BlogForm = ({ createBlog }) => {
     </form>
   );
 };
+
+export default BlogForm;

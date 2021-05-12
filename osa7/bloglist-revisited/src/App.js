@@ -8,16 +8,15 @@ import { setNotification } from './reducers/notificationReducer';
 import { initializeBlogs } from './reducers/blogReducer';
 import { setUser as setReduxUser } from './reducers/userReducer';
 
-import { Notification } from './components/Notification';
-import { LoginForm } from './components/LoginForm';
-import { BlogForm } from './components/BlogForm';
-import { Blogs } from './components/Blogs';
-import { Blog } from './components/Blog';
-import { Togglable } from './components/Togglable';
+import Notification from './components/Notification';
+import LoginForm from './components/LoginForm';
+import BlogForm from './components/BlogForm';
+import Blogs from './components/Blogs';
+import Blog from './components/Blog';
+import Togglable from './components/Togglable';
 import Users from './components/Users';
 import Header from './components/Header';
 import User from './components/User';
-import Navigation from './components/Navigation';
 
 const App = () => {
   const [username, setUsername] = useState('');
@@ -65,11 +64,6 @@ const App = () => {
     setPassword(e.target.value);
   };
 
-  // Broken for now, missing user info from db so doesn't show remove button unless you manually refresh
-  const handleBlogSubmit = () => {
-    blogFormRef.current.toggleVisibility();
-  };
-
   return (
     <div className="app">
       {redux_user === null ? (
@@ -100,7 +94,11 @@ const App = () => {
               <main>
                 <Notification />
                 <Togglable buttonLabel="New blog" ref={blogFormRef}>
-                  <BlogForm createBlog={handleBlogSubmit} />
+                  <BlogForm
+                    toggleVisibility={() =>
+                      blogFormRef.current.toggleVisibility()
+                    }
+                  />
                 </Togglable>
                 <Blogs />
               </main>

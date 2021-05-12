@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
-export const Notification = () => {
+const Notification = () => {
   const message = useSelector((state) => state.notification);
 
   if (!message) return null;
@@ -19,3 +19,5 @@ export const Notification = () => {
     </Card>
   );
 };
+
+export default Notification;

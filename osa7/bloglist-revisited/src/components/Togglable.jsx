@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
  * @param buttonLabel Label for button to open each blog item
  * @param ref for using toggleVisibility outside the component
  */
-export const Togglable = React.forwardRef((props, ref) => {
+const Togglable = React.forwardRef((props, ref) => {
   const [visible, setvisible] = useState(false);
 
   const hideWhenVisible = { display: visible ? 'none' : '' };
@@ -57,3 +57,5 @@ Togglable.displayName = 'Togglable';
 Togglable.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
 };
+
+export default Togglable;

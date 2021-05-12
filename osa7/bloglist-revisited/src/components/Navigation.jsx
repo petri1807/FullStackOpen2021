@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const navstyle = {
-  backgroundColor: 'hsl(190, 80%, 20%)',
+  backgroundColor: 'hsl(100, 40%, 30%)',
   width: '100vw',
   height: '4em',
   display: 'flex',

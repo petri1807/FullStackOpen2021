@@ -9,7 +9,7 @@ import { Button, Box, TextField, Paper } from '@material-ui/core';
  * @param username
  * @param password
  */
-export const LoginForm = ({
+const LoginForm = ({
   handleLogin,
   handlePasswordChange,
   handleUsernameChange,
@@ -101,3 +101,5 @@ LoginForm.propTypes = {
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
 };
+
+export default LoginForm;

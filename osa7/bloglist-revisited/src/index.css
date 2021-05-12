@@ -36,16 +36,7 @@ main {
   margin-left: auto;
   margin-right: auto;
   max-width: 700px;
-  padding: 3em;
-}
-
-.user-info {
-  position: absolute;
-  right: 1em;
-}
-
-.user-info span {
-  margin: 0 1em;
+  padding: 1em;
 }
 
 /*
@@ -80,24 +71,10 @@ textarea {
   text-align: start;
 }
 
-.author {
-  color: #858585;
-}
-
 .blog-title {
   font-size: 1.5em;
   font-weight: bold;
   color: #354d64;
-}
-
-.blog-buttons {
-  display: flex;
-}
-
-.blog-details {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1em;
 }
 
 .notification {
@@ -105,18 +82,4 @@ textarea {
   font-size: 20px;
   padding: 10px;
   margin-bottom: 10px;
-}
-
-@media only screen and (max-width: 768px) {
-  .user-info,
-  .login-credentials {
-    position: relative;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .blog-buttons,
-  .blog-details {
-    flex-direction: column;
-  }
 }

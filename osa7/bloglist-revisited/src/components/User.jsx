@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch, Link } from 'react-router-dom';
 
-import { tableHeaderStyle } from '../styles/styles';
+import { tableHeaderStyle, linkStyle } from '../styles/styles';
 
 import {
   Table,
@@ -40,7 +40,7 @@ const User = () => {
             {selectedUser.blogs.map((blog) => (
               <TableRow key={blog.id}>
                 <TableCell>
-                  <Link to={`/blogs/${blog.id}`}>
+                  <Link to={`/blogs/${blog.id}`} style={linkStyle}>
                     {blog.title} by {blog.author}
                   </Link>
                 </TableCell>
