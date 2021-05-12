@@ -1,0 +1,12 @@
+POST http://localhost:3003/api/blogs/609a5dbb8a2be418082660d3/comments
+Content-Type: application/json
+
+{
+  "comment": "This is even better!"
+}
+
+# STEPS TO TEST
+# 1. Login from ../login/login.rest with credentials petri1807/salasana
+# 2. Copy Authorization token
+# 3. Paste token after bear and save
+# 4. Send request
