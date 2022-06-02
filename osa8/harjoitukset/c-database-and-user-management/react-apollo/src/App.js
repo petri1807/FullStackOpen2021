@@ -1,14 +1,34 @@
 import { useState } from 'react';
-import { useApolloClient, useQuery } from '@apollo/client';
+import {
+  useApolloClient,
+  useQuery,
+  useMutation,
+  useSubscription,
+} from '@apollo/client';
 import Persons from './components/Persons';
 import PersonForm from './components/PersonForm';
-import { ALL_PERSONS } from './graphQL/queries';
+import { ALL_PERSONS, PERSON_ADDED } from './graphQL/queries';
 import { Container } from '@mui/material';
 import PhoneForm from './components/PhoneForm';
 import LoginForm from './components/LoginForm';
 import './index.css';
 import { buttonVariant } from './components/constants';
 import { Button } from '@mui/material';
+
+export const updateCache = (cache, query, addedPerson) => {
+  const uniqByName = (a) => {
+    let seen = new Set();
+    return a.filter((item) => {
+      let k = item.name;
+      return seen.has(k) ? false : seen.add(k);
+    });
+  };
+  cache.updateQuery(query, ({ allPersons }) => {
+    return {
+      allPersons: uniqByName(allPersons.concat(addedPerson)),
+    };
+  });
+};
 
 const App = () => {
   const [token, setToken] = useState(null);
@@ -18,9 +38,16 @@ const App = () => {
   });
   const client = useApolloClient();
 
-  if (result.loading) {
-    return <div>loading...</div>;
-  }
+  useSubscription(PERSON_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      console.log(subscriptionData);
+
+      const addedPerson = subscriptionData.data.personAdded;
+      notify(`${addedPerson.name} added`);
+
+      updateCache(client.cache, { query: ALL_PERSONS }, addedPerson);
+    },
+  });
 
   const logout = () => {
     setToken(null);
@@ -34,6 +61,10 @@ const App = () => {
       setErrorMessage(null);
     }, 10000);
   };
+
+  if (result.loading) {
+    return <div>loading...</div>;
+  }
 
   if (!token) {
     return (

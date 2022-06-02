@@ -23,7 +23,7 @@ const PhoneForm = ({ setError }) => {
     if (result.data && result.data.editNumber === null) {
       setError('Person not fount');
     }
-  }, [result.data]);
+  }, [result.data]); // eslint-disable-line
 
   return (
     <div>
