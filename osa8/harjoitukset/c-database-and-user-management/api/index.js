@@ -1,3 +1,4 @@
+require('dotenv').config();
 const {
   ApolloServer,
   UserInputError,
@@ -11,7 +12,7 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = 'NEED_HERE_A_SECRET_KEY';
 
-const MONGODB_URI = `mongodb+srv://dbUser:Z6MmkWQuQalDg1NF@cluster0.nfrdu.mongodb.net/?retryWrites=true&w=majority`;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 console.log('connecting to', MONGODB_URI);
 
